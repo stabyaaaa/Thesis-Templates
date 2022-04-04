@@ -31,13 +31,11 @@ You can use the template by entering the information to the correct files.
 - appendix.tex is where you enter your appendix
 - thesis.tex is the main file which imports all the above files (you can comment out sections you do not need.)
 
-> * You probably will not need to touch these files
+> \* You probably will not need to touch these files
 
 ## Contributing
 
 Submit a pull request or open an issue if you find any bugs or would like to improve the template.
-
-### How to contribute
 
 - Most of the setup such as the font size, line spacing, font style, etc. should be specified in aitthesis.cls.
 - loft.tex and contents.tex contains the setup for the lists of figures, tables, and contents
