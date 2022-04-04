@@ -18,6 +18,9 @@
 \makeatletter 
 \renewcommand\normalsize{\@setfontsize\normalsize{12pt}{12pt}}
 \makeatother
+\makeatletter 
+\renewcommand\small{\@setfontsize\small{11pt}{11pt}}
+\makeatother
 
 % ---------- set correct margins ----------
 \RequirePackage[a4paper, margin=1in, left=1.5in]{geometry}
