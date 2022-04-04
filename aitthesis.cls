@@ -103,3 +103,10 @@
 \DeclareCaptionLabelFormat{nospace}{#1#2}
 \captionsetup[table]{labelfont=bf,name=Table\space,labelformat=nospace,labelsep=newline}
 \captionsetup[figure]{labelfont=bf,name=Figure\space,labelformat=nospace,labelsep=newline}
+
+% ---------- reference style ----------
+
+\RequirePackage{hyperref}
+\RequirePackage[natbibapa]{apacite}
+
+\renewcommand\bibsection{\centering{\large{\textbf{REFERENCES}}}}

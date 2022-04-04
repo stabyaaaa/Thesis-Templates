@@ -1,9 +1,10 @@
 \documentclass{aitthesis}
 \usepackage{amsmath,amssymb}
-\usepackage{apacite}
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{subfig}
+
+\bibliographystyle{apacite}
 
 \begin{document}
 
@@ -23,9 +24,9 @@
 \include{results}
 \include{conclusion}
 
-
-\bibliographystyle{apacite}
+\phantomsection
 \bibliography{references}
+\addcontentsline{toc}{chapter}{\bf REFERENCES}
 
 \newpage\pagestyle{plain}
 
