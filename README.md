@@ -14,6 +14,16 @@ zip -r thesis_name.zip AIT-thesis-template # zips the repository to thesis_name.
 
 > if you are subscribed to the premium overleaf, simply fork this repo and sync it with your forked repo
 
+### Locally compiling
+
+If you have latex installed locally, you can use the following command to compile your thesis. The output pdf file will be named thesis.pdf.
+
+```console
+platex thesis.tex; pbibtex thesis; platex thesis.tex; dvipdfmx thesis.dvi
+```
+
+> Note that if you can press \<Enter\> whenever there is a warning in the prompt. 
+
 ### How to use the template?
 
 You can use the template by entering the information to the correct files.
