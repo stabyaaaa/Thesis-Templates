@@ -1,5 +1,5 @@
-#AIT-thesis-template
-Latex AIT thesis template 
+# AIT-thesis-template
+This repository contains a latex template for writing your thesis in Asian Institute of Technology.
 
 ## Usage
 
