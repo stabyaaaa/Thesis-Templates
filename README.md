@@ -1,4 +1,4 @@
-# AIT-thesis-template
+#AIT-thesis-template
 Latex AIT thesis template 
 
 ## Usage

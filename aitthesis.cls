@@ -99,10 +99,16 @@
 
 % ---------- table/figure style ----------
 
-\RequirePackage[singlelinecheck=false, textfont=it]{caption}
+\RequirePackage{caption}
+\captionsetup{
+  singlelinecheck=false,
+  textfont=it
+}
+
 \DeclareCaptionLabelFormat{nospace}{#1#2}
 \captionsetup[table]{labelfont=bf,name=Table\space,labelformat=nospace,labelsep=newline}
 \captionsetup[figure]{labelfont=bf,name=Figure\space,labelformat=nospace,labelsep=newline}
+
 \RequirePackage[bottom]{footmisc}
 
 % ---------- reference style ----------
@@ -111,3 +117,9 @@
 \RequirePackage[natbibapa]{apacite}
 
 \renewcommand\bibsection{\centering{\large{\textbf{REFERENCES}}}}
+
+% ---------- list/enumerate style ----------
+
+\RequirePackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=-12pt}
+\setlist[enumerate]{noitemsep, topsep=-12pt}
