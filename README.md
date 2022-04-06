@@ -22,7 +22,7 @@ If you have latex installed locally, you can use the following command to compil
 pdflatex thesis.tex && bibtex thesis.aux && pdflatex thesis.tex && pdflatex thesis.tex
 ```
 
-> Note that if you can press \<Enter\> whenever there is a warning in the prompt. 
+> You can view the example output [here](https://github.com/ruke1ire/AIT-thesis-template/blob/main/thesis.pdf).
 
 ### How to use the template?
 
