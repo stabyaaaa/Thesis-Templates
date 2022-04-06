@@ -12,15 +12,10 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage{tgheros}%% TeX Gyre Sans Serif
 \RequirePackage{tgtermes}%%           TeX Gyre Times
-\makeatletter 
+
 \renewcommand\large{\@setfontsize\large{14pt}{14pt}}
-\makeatother
-\makeatletter 
 \renewcommand\normalsize{\@setfontsize\normalsize{12pt}{12pt}}
-\makeatother
-\makeatletter 
 \renewcommand\small{\@setfontsize\small{11pt}{11pt}}
-\makeatother
 
 % ---------- set correct margins ----------
 \RequirePackage[a4paper, margin=1in, left=1.5in]{geometry}
@@ -31,7 +26,6 @@
 % ---------- set correct chapter style ----------
 \renewcommand{\chaptername}{CHAPTER}
 
-\makeatletter
 \def\@makechapterhead#1{
   {\centering
     \ifnum \c@secnumdepth >\m@ne
@@ -49,7 +43,6 @@
     \large \bfseries  #1\par\nobreak
     \vskip 20pt
   }}
-\makeatother
 
 % ---------- set correct section/subsection style ----------
 
