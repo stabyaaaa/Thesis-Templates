@@ -19,7 +19,7 @@ zip -r thesis_name.zip AIT-thesis-template # zips the repository to thesis_name.
 If you have latex installed locally, you can use the following command to compile your thesis. The output pdf file will be named thesis.pdf.
 
 ```console
-platex thesis.tex; pbibtex thesis; platex thesis.tex; dvipdfmx thesis.dvi
+pdflatex thesis.tex && bibtex thesis.aux && pdflatex thesis.tex && pdflatex thesis.tex
 ```
 
 > Note that if you can press \<Enter\> whenever there is a warning in the prompt. 
