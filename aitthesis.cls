@@ -26,7 +26,7 @@
 \RequirePackage[a4paper, margin=1in, left=1.5in]{geometry}
 
 % ---------- set correct line spacing ----------
-\linespread{1.5}
+\linespread{1.75}
 
 % ---------- set correct chapter style ----------
 \renewcommand{\chaptername}{CHAPTER}
@@ -41,13 +41,13 @@
     \interlinepenalty\@M
     \large \bfseries #1
     \\
-    \vskip 2em \p@
+    \vskip 2em
   }}
 \def\@makeschapterhead#1{
   {\centering
     \interlinepenalty\@M
     \large \bfseries  #1\par\nobreak
-    \vskip 20\p@
+    \vskip 20pt
   }}
 \makeatother
 
@@ -90,12 +90,12 @@
 \renewcommand{\cfttabpresnum}{Table }
 \renewcommand{\cfttabaftersnum}{}
 \renewcommand{\cfttabnumwidth}{4.5em}
-\renewcommand{\cfttabindent}{}
+\renewcommand{\cfttabindent}{0em}
 
 \renewcommand{\cftfigpresnum}{Figure }
 \renewcommand{\cftfigaftersnum}{}
 \renewcommand{\cftfignumwidth}{5em}
-\renewcommand{\cftfigindent}{}
+\renewcommand{\cftfigindent}{0em}
 
 % ---------- table/figure style ----------
 
@@ -105,9 +105,8 @@
   textfont=it
 }
 
-\DeclareCaptionLabelFormat{nospace}{#1#2}
-\captionsetup[table]{labelfont=bf,name=Table\space,labelformat=nospace,labelsep=newline}
-\captionsetup[figure]{labelfont=bf,name=Figure\space,labelformat=nospace,labelsep=newline}
+\captionsetup[table]{labelfont=bf,name=Table\space,labelsep=newline}
+\captionsetup[figure]{labelfont=bf,name=Figure\space,labelsep=newline}
 
 \RequirePackage[bottom]{footmisc}
 
