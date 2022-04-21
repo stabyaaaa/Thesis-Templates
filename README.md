@@ -28,6 +28,7 @@ pdflatex thesis.tex && bibtex thesis.aux && pdflatex thesis.tex && pdflatex thes
 
 You can use the template by entering the information to the correct files.
 - cover.tex contains the title, name, etc.
+- declaration.tex contains the author's declaration
 - contents.tex\* is the setup for the table of contents
 - acknowledgements.tex is where you put your acknowledgements
 - abstract.tex is where you write the abstract of your thesis
