@@ -1,3 +1,297 @@
 \setlength{\footskip}{8mm}
 
+
+
 \chapter{METHODOLOGY}
+\section{Agricultural Soil Resource Monitoring}
+The methodology for designing a real time agricultural soil resource monitoring system requires the use of ESP32 integrated with sensors and 
+aligned with Machine Learning Model. The system will continuously monitor and capture real-time environmental data which includes humidity,
+soil moisture, Nitrogen, Potassium and Phosphorus. These real-time data will be transmitted wirelessly through the help of wifi model present
+in ESP32 to a central processing unit, where a machine learning model, DQN, will process, analyize and allocate the missing resources to the 
+farmer. AI powered monitoring system will help precise use of water and fertilizer Requirements, hence helping farmer acheive high productivity
+while minimiging waste.
+
+\subsubsection{3.1.1 Sensors and Devices}
+This section comprises of different types of sensors and IoT devices which is going to be used in this project.
+\subsubsection{3.1.1.1 hlo}
+To measure the amount of Nitrogen, Potassium, and Phosphorus in the soil, NPK sensor is used which determines the fertility of soil. The sensor
+operates on as high as 24v and as low as 9v and this sensor does not require any chemical reagent. 
+
+\section{Plant Disease Detection}
+This section covers the entire procedures of building a plant disease prediction model using Convolutional Neural Network.\\
+
+
+\subsection{Dataset}
+The dataset comprises of different plant leaf which are distributed across 38 classes of diseased and healthy plants. These images are stored 
+in subdirectories and each directory name corresponds to a speccific class of diseased or healthy leaf. This step is crucial for understanding
+and monitoring the overall structure of the dataset and preparing it for the prediction model. The os library is employed to transverse the 
+directory  structure and fetch class name which ensures the proper class handling. These class labels directly map to the output categories in the
+image classificatoin problem. Figure 3.2 shows single images from each classes. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics*[width = 400pt]{figures/dataset.png}
+    \captionsetup{labelsep=colon, justification=centering, labelfont=bf}
+    \caption{Dataset}
+\end{figure}
+
+
+\subsubsection{Exploratory Data Analysis}
+Before diving into model training, visualizing the data is essential to identify potential issues such as class imbalance, mislabeled images,
+or noisy samples. Using Matplotlib, a grid of sample images from different classes is displayed. This visualization provides valuable 
+insights into the variety of images within each category. One image from each class is shown in the figure 3.1 For a more quantitative understanding, Seaborn bar plots are generated to visualize the distribution of images across classes. 
+These plots reveal potential imbalances in the dataset, such as one class having significantly fewer samples than others. 
+Identifying such imbalances early on is crucial since imbalanced datasets can lead to biased model predictions. Bar plot generated for class
+imbalance is shown in figure 3.2
+
+\begin{figure}[h]
+    \centering
+    \includegraphics*[width = 300pt]{figures/classes_count.png}
+    \captionsetup{labelsep=colon, justification=centering, labelfont=bf}
+    \caption{Dataset}
+\end{figure}
+
+For a more quantitative understanding, Seaborn bar plots are generated to visualize the distribution of images across classes. These plots reveal
+potential imbalances in the dataset, such as one class having significantly fewer samples
+than others. Identifying such imbalances early on is crucial since imbalanced datasets
+can lead to biased model predictions. Bar plot generated for class imbalance shows that there is a noticeable difference in image accross all classes, with maximum of 2022 images for the class Soybean healthy
+and 1683 for the least class Cherry Podery Mildew. Other classes like tomatoes, apples, bell, peach and pepper have relatively balanced image 
+counts ranging from 1700-2000 images.
+
+These class imbalance can cause model to become baised which can miscallsify the minority class and result
+in poor classification performance(science direct citation). Machine Learning models in Class Imbalance dataset tends to be more biased towards the
+majority class, resulting in poor performance classification towards the minority class. This causes high true positive rates(TPR) but a
+low true negative rate (TNR) when most instances are positive (Wei et al, 2013)
+
+\subsection{Proposed methodology}
+
+
+\subsubsection{Data Preprocessing}
+A function for preprocessing has been created to process the colored images from each class to grescale. This is done so simplify the images and
+remove unnecessary color information from the image. The output greyscale images is then blurred using gaussian blue to remove any extra noise,
+helping machine learning model to focus on the significant structures in the image. Next, Contrast Limited Adaptive Histogram Equalization (CLAHE)
+is applied to the resulting gaussian blurred image, which  makes the details more prominent and easier to distinguish. As machine learning Model
+requires a uniform value of each image, normalizarion is done by scaling the pixel value to the range [0,1].
+
+
+Since the dataset contains images ranging from 1600-2000 in each class, data augmentation can help address imbalanced sets of classes and help machine
+learning model to learn and improve the models ability to generalize from an equal subset of dataset. These steps cover the process like random
+brighness, horizontal flip, vertical flip, 90 degree image rotation and gamma correction. These augmentation process artificially increase the
+dataset and introduce variation to increase the ability to generalize. This helps class imbalance ensuring all the classes have same or uniform
+number of dataset which prevents from model being baised towards the overrepresented classes. \\
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=400pt]{figures/preprocessing.png}
+    \captionsetup{labelsep=colon, justification=centering, labelfont=bf}
+    \caption{Dataset Preprocessing}
+\end{figure}
+
+When random cropping is done, images are resized randomly, and torch tensors only accepts all the images sizes to be same, so the image is resized to 224 by 224 pixels, ensuring
+consistency in input size for the model. At last, the pixel values are scaled back to the range of [0,225]. Finally, the processed images is saved in
+output directory. The entire pipeline helps to prepare the images that model understands and increase the model's ability to learn from diverse
+data ensuring balanced class.
+
+\subsubsection{Data Loaders}
+Once the prerpocessing steps are completed, it will be efficiently fed into the model
+during training and evaluation. Dataloader class in PyTorch helps this process which is
+specailly designed to handle batching, shuffling and parallel data loading to optimize the
+training process. The training testing and validation dataset will be wrapped into their re-
+spective dataloader instances. Here, the training dataloader will shuffle the data in order
+to stop model from learning the order of image samples. This will create randomization
+and prevents overfitting and improve models generalization ability.
+
+
+However, the validation and testing dataloader will retain a fixed order of samples to ensure consistent and
+reproducinle evaluation. Also to make things easier ad convenient when training with
+various devices, DataLoaders are going to be wrapped in DeviceDataLoader, a simple
+utility that automatically moves batches of data to an appropriate device either CUP or
+GPU, In such saces, this will avoid repetitive code, ensuring proper matching between
+the data and model computations on the same device. The use of GPUs will result in
+faster training. Other optimizations include number workers, data loading and similarly, 
+pin memory for efficient memory transfers onto the GPU. These will equally be used in 
+further improving efficiency in data loading. So, by implementing this strategy, the proposed work aims to 
+establish an optimized and scalable datapipeline that will significantly improve training efficiency and
+model performance.
+
+\clearpage
+\subsubsection{Model Architecture}
+
+High-accuracy prediction and classification of diseases in plants help the production of disease-free crops with minimal loss 
+in agriculture. For that purpose, a customized CNN architecture called CNN\_NeuralNet 
+with enhanced performance on the image classification tasks involved in the prediction of diseases in plants has been designed.
+The following is a detailed explanation of its architecture and the elements involved. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics*[width = 400pt]{figures/CNN1.jpg}
+    \captionsetup{labelsep=colon, justification=centering, labelfont=bf}
+    \caption{Convolutional Neural Network Architecture Diagram}
+\end{figure}
+
+
+
+
+\textbf{Input Layer} 
+
+It starts with an input layer configured for high-resolution images of plant leaves that are captured under diverse lighting
+environmental conditions. Then, these images are resized into a standard dimension of 
+resolution 224x224 pixels which consists of 3 RGB channels, maintaining their crucial details for effective disease 
+detection.
+
+\textbf{Convolutional Layers}
+
+Convolutional layer is the most important layer and is the core building block of CNN (Adrian et al). This layer computes the dot 
+product between two matrices: one containing learnable parameters usually referred to as a kernel and another representing a certain 
+part of the receptive field of the input image. In contrast to the full image, this kernel has smaller height and width but always 
+has the same depth as an input. For an RGB image, this means that though the kernel is spatially compact in dimensions, it spans all 
+three color channels: Red, Green, Blue. Multiple convolutional layers have been set up to capture essential features like textures, 
+color variations, spots, and lesions, which are indicative of plant diseases.
+
+During the forward pass, the kernel moves along the height and width of the input image, collecting information at each position. 
+At every position, it generates a response, thus obtaining a two-dimensional output called the activation map. This is where the 
+kernel signals how it responds to features from different spatial positions of the input image. A step distance is how much a kernel 
+is shifted in every step, also referred to as stride. (link 2 source)
+
+Lets consider an input soze of W x W x D and Dout be the number of kernels having spatial size of F with stride and amount of padding P,
+then, Output can be determined by the following formula: 
+\begin{equation}
+    W_{\text{out}} = \frac{W - F + 2P}{S} + 1
+\end{equation}
+
+
+\clearpage  % Forces image to appear on the next page
+
+\begin{figure}[h]
+    \centering
+    \includegraphics*[width = 300pt]{figures/convolution_operation.png}
+    \captionsetup{labelsep=colon, justification=centering, labelfont=bf}
+    \caption{Convolution Operator, Souce: Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville }
+\end{figure}
+
+\textbf{Pooling Layers} 
+
+A 2x2 window is slid over the input grid by the Max Pooling layer. and it selects the highest value from the 2 by 2 rectangle 
+at each steps. If the stride is 2, the window is advanced to two steps, i.e, both vertically and horizontally. The highest value 
+from each grid is selected and a new feature map with smaller dimension, for example, 4x4 to 2x2 is the end layer. Here, maxpooling 
+layer selects the most prominent and noticeable features from the input grid, and it aids in preserving important
+features. 
+
+\clearpage
+\begin{figure}[h]
+    \centering
+    \includegraphics*[width = 300pt]{figures/maxpool.png}
+    \captionsetup{labelsep=colon, justification=centering, labelfont=bf}
+    \caption{Process of Maxpool Layer}
+\end{figure}
+
+
+\textbf{FullyConnected Layers (Dense Layers)}
+The output from convolutional layer and maxpool layer is falttened and passed through the fully connected layer, where each neurons
+from input layer is connected to each neurons in output layer. This will enable model to quickly adadpt and learn complex pattern 
+associated with plant disease. Dense Layer 1 helps identifying and extracting global featues related to disease manifestations
+such as intensity of the diseased spot, and other variations accross the leaf where as Dense layer 2, also known as final layer, 
+outputs a probability distribution by combining the extracted global features.
+
+The inputs to each neurons is a weighted sum of inputs received from the previous inputs plus a bias, which can be denoted as:
+\begin{equation}
+    z_j = \sum_{i} (w_{ij} \cdot x_i) + b_j
+\end{equation}
+
+Where:
+\begin{itemize}
+  \item $w_{ij}$ is the weight from neuron $i$ of the previous layer to neuron $j$,
+  \item $x_i$ is the input from neuron $i$,
+  \item $b_j$ is the bias for neuron $j$.
+\end{itemize}
+
+
+\textbf{Dropout}
+This method is crucial in preventing overfitting by randomly dropping out a fraction of the neurons during training. This prevents
+the networks relying on a specific neurons and improves generalization. For this approch, rates between 0.3 and 0.5 have been used, which 
+balances the trade-off between model complxity and regularization. 
+
+
+\textbf{Softmax Layer:}
+The final layer of CNN architecture converts the raw output values into probabilities distribution, where the sum of all the probabilities
+equals to one. Then, the network assigns confidence score to each plant disease class hence, the disease class with highest probabolities
+is selected as the predicted label. The softmax layer can be denotes as:
+\begin{equation}
+    \sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k} e^{z_k}}
+\end{equation}
+
+Where:
+\begin{itemize}
+    
+
+\item \( \mathbf{z} \) is the vector of input values (typically logits from the final layer of a neural network),
+\item \( z_j \) is the \( j \)-th element of the input vector,
+\item \( e^{z_j} \) is the exponential function applied to the \( j \)-th element of the vector,
+\end{itemize}
+The denominator sums the exponentials of all the elements in the vector to normalize the result, ensuring the output is a probability distribution.
+
+\textbf{Weight Initialization}
+The choice of the weight initialization method significantly influences the speed of convergence, stability in training, and 
+generalization ability of a neural network. Proper initial weights provide no vanishing gradients, exploding gradients, and 
+slow convergence in learning while learning efficiently and effectively. The initialization formula is:
+
+\begin{equation}
+    \mathbf{W} \sim \mathcal{N}\left(0, \frac{2}{\text{number of input neurons}}\right)
+\end{equation}
+
+Where:
+\begin{itemize}
+    \item \( \mathbf{W} \) represents the weights of the neurons in the layer,
+    \item \( \mathcal{N}(0, \frac{2}{\text{number of input neurons}}) \) denotes a normal distribution with mean 0 and variance \( \frac{2}{\text{number of input neurons}} \),
+    \item  In order to maintain stable gradients during training, the factor \( \frac{2}{\text{number of input neurons}} \)
+    ensures that the weights are initialized with a variance that scales with the number of input neurons.
+\end{itemize}
+
+
+
+
+\textbf{Optimizer:}
+The Adam optimizer has been selected for its adaptive learning rate properties, which facilitate faster convergence without manual tuning.
+
+The weight update rule in the Adam optimizer is given by:
+
+\[
+w^{t+1} = w^{t} - \alpha m^{t}
+\]
+
+where,
+
+\[
+m^{t} = \beta m^{t-1} + (1-\beta) \left[ \frac{\partial L}{\partial w^{t}} \right]
+\]
+
+\textbf{Explanation:}
+
+\begin{itemize}
+    \item \( m^{t} \) is the aggregate of gradients at time \( t \) (current), initially \( m^{t} = 0 \).
+    \item \( m^{t-1} \) is the aggregate of gradients at time \( t-1 \) (previous).
+    \item \( w^{t} \) represents the weights at time \( t \).
+    \item \( w^{t+1} \) represents the updated weights at time \( t+1 \).
+    \item \( \alpha \) is the learning rate at time \( t \).
+    \item \( \frac{\partial L}{\partial w^{t}} \) is the derivative of the loss function with respect to the weights at time \( t \).
+    \item \( \beta \) is the moving average parameter (typically a constant like 0.9).
+\end{itemize}
+
+
+% \textbfLoss Function:
+% Cross-entropy loss is utilized for penalizing incorrect predictions and guiding the model toward accurate disease classification.
+
+% \textbfBackpropagation:
+% The architecture supports backpropagation, where gradients of the loss function are computed and propagated backward through the network to update weights using the Adam optimizer.
+
+% \textbfEarly Stopping and Learning Rate Scheduling:
+
+% \textbfEarly Stopping: Prevents overfitting by halting training when validation performance plateaus.
+% Learning Rate Scheduler: Dynamically reduces the learning rate when the validation accuracy stops improving.
+
+% Training Strategy:
+
+% Batch Size: Configured based on available hardware. In this case, GTX 1650 GPU has been used, so 32 is selected as batch size.
+
+% Epochs: Trained for an adequate number of epochs, typically between 50 to 100, to achieve convergence.
+
+% Validation Split: A portion (e.g., 20\%) is reserved for validation to monitor model performance.
